@@ -54,14 +54,38 @@
 		5587E26020EC09210088D08C /* Quiz */ = {
 			isa = PBXGroup;
 			children = (
+				5587E27520EC0B400088D08C /* Controller */,
+				5587E27420EC0B3C0088D08C /* View */,
+				5587E27320EC0B360088D08C /* Model */,
 				5587E26120EC09210088D08C /* AppDelegate.swift */,
-				5587E26320EC09210088D08C /* ViewController.swift */,
 				5587E26520EC09210088D08C /* Main.storyboard */,
 				5587E26820EC09220088D08C /* Assets.xcassets */,
 				5587E26A20EC09220088D08C /* LaunchScreen.storyboard */,
 				5587E26D20EC09220088D08C /* Info.plist */,
 			);
 			path = Quiz;
+			sourceTree = "<group>";
+		};
+		5587E27320EC0B360088D08C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5587E27420EC0B3C0088D08C /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5587E27520EC0B400088D08C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5587E26320EC09210088D08C /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
