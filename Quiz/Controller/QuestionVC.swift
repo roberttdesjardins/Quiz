@@ -18,6 +18,8 @@ class QuestionVC: UIViewController {
     @IBOutlet weak var timeRemainingLbl: UILabel!
     @IBOutlet weak var scoreLbl: UILabel!
     
+    var answer = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,26 +27,45 @@ class QuestionVC: UIViewController {
     }
     
     func getQuestion() {
-        let randomQuestion = randRange(lower: 0, upper: UInt32(questionsStored.count))
+        let randomQuestion = randRange(lower: 0, upper: UInt32(questionsStored.count - 1))
         let question = Question(question: questionsStored[randomQuestion])
         questionLbl.text = question.question
         answer1Btn.setTitle(question.answer1, for: .normal)
         answer2Btn.setTitle(question.answer2, for: .normal)
         answer3Btn.setTitle(question.answer3, for: .normal)
         answer4Btn.setTitle(question.answer4, for: .normal)
+        answer = question.correctAnswer
     }
     
     @IBAction func answer1BtnPressed(_ sender: Any) {
+        if answer1Btn.currentTitle == answer { answeredCorrectly() }
+        else { answeredIncorrectly() }
     }
     @IBAction func answer2BtnPressed(_ sender: Any) {
+        if answer2Btn.currentTitle == answer { answeredCorrectly() }
+        else { answeredIncorrectly() }
     }
     @IBAction func answer3BtnPressed(_ sender: Any) {
+        if answer3Btn.currentTitle == answer { answeredCorrectly() }
+        else { answeredIncorrectly() }
     }
     @IBAction func answer4BtnPressed(_ sender: Any) {
+        if answer4Btn.currentTitle == answer { answeredCorrectly() }
+        else { answeredIncorrectly() }
     }
     
     
+    func answeredCorrectly() {
+        // TODO
+        print("Answered Correctly!")
+        getQuestion()
+    }
     
+    func answeredIncorrectly() {
+        // TODO
+        print("wrong")
+        getQuestion()
+    }
     
     
     
