@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		5587E26220EC09210088D08C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587E26120EC09210088D08C /* AppDelegate.swift */; };
-		5587E26420EC09210088D08C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587E26320EC09210088D08C /* ViewController.swift */; };
+		5587E26420EC09210088D08C /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587E26320EC09210088D08C /* StartVC.swift */; };
 		5587E26720EC09210088D08C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5587E26520EC09210088D08C /* Main.storyboard */; };
 		5587E26920EC09220088D08C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5587E26820EC09220088D08C /* Assets.xcassets */; };
 		5587E26C20EC09220088D08C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5587E26A20EC09220088D08C /* LaunchScreen.storyboard */; };
+		5587E27720EC0BB70088D08C /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587E27620EC0BB70088D08C /* Question.swift */; };
+		5587E27920EC11270088D08C /* QuestionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587E27820EC11270088D08C /* QuestionVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5587E25E20EC09210088D08C /* Quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5587E26120EC09210088D08C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5587E26320EC09210088D08C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5587E26320EC09210088D08C /* StartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
 		5587E26620EC09210088D08C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5587E26820EC09220088D08C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5587E26B20EC09220088D08C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5587E26D20EC09220088D08C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5587E27620EC0BB70088D08C /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		5587E27820EC11270088D08C /* QuestionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,7 @@
 		5587E27320EC0B360088D08C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5587E27620EC0BB70088D08C /* Question.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -83,7 +88,8 @@
 		5587E27520EC0B400088D08C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				5587E26320EC09210088D08C /* ViewController.swift */,
+				5587E26320EC09210088D08C /* StartVC.swift */,
+				5587E27820EC11270088D08C /* QuestionVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -159,7 +165,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5587E26420EC09210088D08C /* ViewController.swift in Sources */,
+				5587E27920EC11270088D08C /* QuestionVC.swift in Sources */,
+				5587E27720EC0BB70088D08C /* Question.swift in Sources */,
+				5587E26420EC09210088D08C /* StartVC.swift in Sources */,
 				5587E26220EC09210088D08C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
