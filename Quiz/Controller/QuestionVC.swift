@@ -21,6 +21,7 @@ class QuestionVC: UIViewController {
     var answer = ""
     
     var questionType: String?
+    var listOfQuestions: [QuestionStruct]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,13 +29,29 @@ class QuestionVC: UIViewController {
         answer2Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         answer3Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         answer4Btn.titleLabel?.adjustsFontSizeToFitWidth = true
+        setQuestionType()
         getQuestion()
+    }
+    
+    func setQuestionType() {
+        if questionType != nil {
+            switch questionType {
+            case "All":
+                listOfQuestions = allQuestionsStored
+            case "Political":
+                listOfQuestions = politicalQuestionsStored
+            case "Music":
+                listOfQuestions = musicQuestionsStored
+            default:
+                listOfQuestions = allQuestionsStored
+            }
+        }
     }
     
     
     func getQuestion() {
-        let randomQuestion = randRange(lower: 0, upper: UInt32(allQuestionsStored.count - 1))
-        let question = Question(question: allQuestionsStored[randomQuestion])
+        let randomQuestion = randRange(lower: 0, upper: UInt32(listOfQuestions.count - 1))
+        let question = Question(question: listOfQuestions[randomQuestion])
         questionLbl.text = question.question
         answer1Btn.setTitle(question.answer1, for: .normal)
         answer2Btn.setTitle(question.answer2, for: .normal)
