@@ -63,10 +63,20 @@ struct QuestionStruct {
     let correctAnswer: String
 }
 
-var questionsStored: [QuestionStruct] {
+var allQuestionsStored: [QuestionStruct] {
+    let allQuestions = politicalQuestionsStored + musicQuestionsStored
+    return allQuestions
+}
+
+var politicalQuestionsStored: [QuestionStruct] {
     let question0 = QuestionStruct(question: "Who is the current president of the United States?", answer1: "Barack Obama", answer2: "Hillary Clinton", answer3: "Donald Trump", answer4: "Vladimir Putin", correctAnswer: "Donald Trump")
     let question1 = QuestionStruct(question: "Name the first President of the United States", answer1: "Abraham Lincoln", answer2: "George Washington", answer3: "George H. W. Bush", answer4: "Channing Tatum", correctAnswer: "George Washington")
     let question2 = QuestionStruct(question: "In which year was the US Constitution drafted?", answer1: "1776", answer2: "1787", answer3: "1899", answer4: "2001", correctAnswer: "1787")
     let question3 = QuestionStruct(question: "Who is the longest serving president of the United States?", answer1: "George Washington", answer2: "Donald Trump", answer3: "Thomas Jefferson", answer4: "Franklin D. Roosevelt", correctAnswer: "Franklin D. Roosevelt")
     return [question0, question1, question2, question3]
+}
+
+var musicQuestionsStored: [QuestionStruct] {
+    let question0 = QuestionStruct(question: "Which 80s Clash song, when re-released in 1991, went straight to number one in the UK?", answer1: "London Calling", answer2: "Straight to Hell", answer3: "Rock the Casbah", answer4: "Should I Stay or Should I Go?", correctAnswer: "Should I Stay or Should I Go?")
+    return [question0]
 }

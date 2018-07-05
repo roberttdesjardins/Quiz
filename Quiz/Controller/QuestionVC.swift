@@ -23,12 +23,16 @@ class QuestionVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        answer1Btn.titleLabel?.adjustsFontSizeToFitWidth = true
+        answer2Btn.titleLabel?.adjustsFontSizeToFitWidth = true
+        answer3Btn.titleLabel?.adjustsFontSizeToFitWidth = true
+        answer4Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         getQuestion()
     }
     
     func getQuestion() {
-        let randomQuestion = randRange(lower: 0, upper: UInt32(questionsStored.count - 1))
-        let question = Question(question: questionsStored[randomQuestion])
+        let randomQuestion = randRange(lower: 0, upper: UInt32(allQuestionsStored.count - 1))
+        let question = Question(question: allQuestionsStored[randomQuestion])
         questionLbl.text = question.question
         answer1Btn.setTitle(question.answer1, for: .normal)
         answer2Btn.setTitle(question.answer2, for: .normal)
@@ -66,6 +70,12 @@ class QuestionVC: UIViewController {
         print("wrong")
         getQuestion()
     }
+    
+    @IBAction func exitBtnPressed(_ sender: Any) {
+        // TODO: Save score?
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     
     

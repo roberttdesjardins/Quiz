@@ -9,11 +9,17 @@
 import UIKit
 
 class StartVC: UIViewController {
-
+    @IBOutlet weak var highScoreLbl: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
+    
+    @IBAction func questionTypeBtnPressed(_ sender: Any) {
+        
+    }
+    
 
 }
 
