@@ -20,6 +20,7 @@ class QuestionVC: UIViewController {
     
     var answer = ""
     
+    var questionType: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class QuestionVC: UIViewController {
         answer4Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         getQuestion()
     }
+    
     
     func getQuestion() {
         let randomQuestion = randRange(lower: 0, upper: UInt32(allQuestionsStored.count - 1))

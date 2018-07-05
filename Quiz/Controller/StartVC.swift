@@ -9,26 +9,20 @@
 import UIKit
 
 class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-    // TODO: Create popup to choose question type
-    // Load question type into questionTypeBtn text
     
     
     @IBOutlet weak var pickerTextField: UITextField!
     @IBOutlet weak var highScoreLbl: UILabel!
     
-    var pickOptions = ["All", "Political", "Music"]
+    let start = Start(questionType: "All", questionChoices: ["All", "Political", "Music"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let pickerView = UIPickerView()
         
         pickerView.delegate = self
-        
         pickerTextField.inputView = pickerView
-        
-        
-        
-        //let toolBar = UIToolbar(frame: CGRect(0, self.view.frame.size.height/6, self.view.frame.size.width, 40.0))
+
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width: self.view.frame.size.width, height: 40.0))
         toolBar.layer.position = CGPoint(x: self.view.frame.size.width/2, y: self.view.frame.size.height-20.0)
         toolBar.barStyle = UIBarStyle.blackTranslucent
@@ -41,7 +35,6 @@ class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width / 3, height: self.view.frame.size.height))
-        
         label.font = UIFont(name: "Helvetica", size: 12)
         label.backgroundColor = UIColor.clear
         label.textColor = UIColor.white
@@ -70,16 +63,22 @@ class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickOptions.count
+        return start.questionChoices.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickOptions[row]
+        return start.questionChoices[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        pickerTextField.text = pickOptions[row]
+        start.questionType = start.questionChoices[row]
+        pickerTextField.text = start.questionType
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationViewController = segue.destination as? QuestionVC {
+            destinationViewController.questionType = start.questionType
+        }
+    }
 }
 

@@ -10,12 +10,20 @@ import Foundation
 
 class Start {
     fileprivate var _questionType: String!
+    fileprivate var _questionChoices: [String]!
     
-    var questionType: String {
-        return _questionType
+    
+    var questionChoices: [String] {
+        return _questionChoices
     }
     
-    init(questionType: String) {
+    var questionType: String {
+        set { _questionType = newValue }
+        get { return _questionType }
+    }
+    
+    init(questionType: String, questionChoices: [String]) {
         self._questionType = questionType
+        self._questionChoices = questionChoices
     }
 }
