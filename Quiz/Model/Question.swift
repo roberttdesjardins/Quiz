@@ -64,11 +64,11 @@ struct QuestionStruct {
 }
 
 var allQuestionsStored: [QuestionStruct] {
-    let allQuestions = politicalQuestionsStored + musicQuestionsStored
+    let allQuestions = usPoliticalQuestionsStored + musicQuestionsStored
     return allQuestions
 }
 
-var politicalQuestionsStored: [QuestionStruct] {
+var usPoliticalQuestionsStored: [QuestionStruct] {
     let question0 = QuestionStruct(question: "Who is the current president of the United States?", answer1: "Barack Obama", answer2: "Hillary Clinton", answer3: "Donald Trump", answer4: "Vladimir Putin", correctAnswer: "Donald Trump")
     let question1 = QuestionStruct(question: "Name the first President of the United States", answer1: "Abraham Lincoln", answer2: "George Washington", answer3: "George H. W. Bush", answer4: "Channing Tatum", correctAnswer: "George Washington")
     let question2 = QuestionStruct(question: "In which year was the US Constitution drafted?", answer1: "1776", answer2: "1787", answer3: "1899", answer4: "2001", correctAnswer: "1787")
@@ -78,5 +78,6 @@ var politicalQuestionsStored: [QuestionStruct] {
 
 var musicQuestionsStored: [QuestionStruct] {
     let question0 = QuestionStruct(question: "Which 80s Clash song, when re-released in 1991, went straight to number one in the UK?", answer1: "London Calling", answer2: "Straight to Hell", answer3: "Rock the Casbah", answer4: "Should I Stay or Should I Go?", correctAnswer: "Should I Stay or Should I Go?")
-    return [question0]
+    let question1 = QuestionStruct(question: "Which of the following beatles albums was released first?", answer1: "Please Please Me", answer2: "Let It Be", answer3: "Sgt. Pepper's Lonely Hearts Club Band", answer4: "Introducing... The Beatles", correctAnswer: "Please Please Me")
+    return [question0, question1]
 }

@@ -9,6 +9,7 @@
 import UIKit
 
 class QuestionVC: UIViewController {
+    // TODO: Create a countdown timer
     
     @IBOutlet weak var questionLbl: UILabel!
     @IBOutlet weak var answer1Btn: UIButton!
@@ -19,18 +20,27 @@ class QuestionVC: UIViewController {
     @IBOutlet weak var scoreLbl: UILabel!
     
     var answer = ""
+    var score = 0
+    var numberOfWrongAnswers: Int = 0
+    let maxNumberOfWrongAnswers: Int = 3
     
     var questionType: String?
     var listOfQuestions: [QuestionStruct]!
     
+    var seconds = GameData.shared.startTimer
+    var timer = Timer()
+    var isTimerRunning = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        scoreLbl.text = "Score: \(score)"
         answer1Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         answer2Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         answer3Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         answer4Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         setQuestionType()
         getQuestion()
+        runTimer()
     }
     
     func setQuestionType() {
@@ -38,8 +48,8 @@ class QuestionVC: UIViewController {
             switch questionType {
             case "All":
                 listOfQuestions = allQuestionsStored
-            case "Political":
-                listOfQuestions = politicalQuestionsStored
+            case "US Politics":
+                listOfQuestions = usPoliticalQuestionsStored
             case "Music":
                 listOfQuestions = musicQuestionsStored
             default:
@@ -58,6 +68,7 @@ class QuestionVC: UIViewController {
         answer3Btn.setTitle(question.answer3, for: .normal)
         answer4Btn.setTitle(question.answer4, for: .normal)
         answer = question.correctAnswer
+        seconds = GameData.shared.startTimer
     }
     
     @IBAction func answer1BtnPressed(_ sender: Any) {
@@ -80,13 +91,17 @@ class QuestionVC: UIViewController {
     
     func answeredCorrectly() {
         // TODO
-        print("Answered Correctly!")
+        score = score + (10 * seconds)
+        scoreLbl.text = "Score: \(score)"
         getQuestion()
     }
     
     func answeredIncorrectly() {
         // TODO
-        print("wrong")
+        numberOfWrongAnswers = numberOfWrongAnswers + 1
+        if numberOfWrongAnswers >= maxNumberOfWrongAnswers {
+            gameOver()
+        }
         getQuestion()
     }
     
@@ -95,8 +110,22 @@ class QuestionVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    func gameOver() {
+        // TODO
+    }
     
     
+    func runTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(QuestionVC.updateTimer)), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateTimer() {
+        seconds -= 1
+        timeRemainingLbl.text = "Time Remaining: \(seconds)"
+        if seconds <= 0 {
+            answeredIncorrectly()
+        }
+    }
     
     func randRange (lower: UInt32 , upper: UInt32) -> Int {
         return Int(lower + arc4random_uniform(upper - lower + 1))

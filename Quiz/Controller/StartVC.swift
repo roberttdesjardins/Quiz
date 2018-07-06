@@ -14,7 +14,7 @@ class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet weak var pickerTextField: UITextField!
     @IBOutlet weak var highScoreLbl: UILabel!
     
-    let start = Start(questionType: "All", questionChoices: ["All", "Political", "Music"])
+    let start = Start(questionType: "All", questionChoices: ["All", "US Politics", "Music"])
     
     override func viewDidLoad() {
         super.viewDidLoad()

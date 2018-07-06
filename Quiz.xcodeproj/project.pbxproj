@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5504DA3420ED9365002D3E77 /* UserDefaultsExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504DA3320ED9365002D3E77 /* UserDefaultsExt.swift */; };
 		5504DA3620EDA157002D3E77 /* Start.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5504DA3520EDA157002D3E77 /* Start.swift */; };
+		550C033920EFFF980000B435 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550C033820EFFF980000B435 /* GameData.swift */; };
 		5587E26220EC09210088D08C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587E26120EC09210088D08C /* AppDelegate.swift */; };
 		5587E26420EC09210088D08C /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587E26320EC09210088D08C /* StartVC.swift */; };
 		5587E26720EC09210088D08C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5587E26520EC09210088D08C /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 /* Begin PBXFileReference section */
 		5504DA3320ED9365002D3E77 /* UserDefaultsExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsExt.swift; sourceTree = "<group>"; };
 		5504DA3520EDA157002D3E77 /* Start.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Start.swift; sourceTree = "<group>"; };
+		550C033820EFFF980000B435 /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		5587E25E20EC09210088D08C /* Quiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5587E26120EC09210088D08C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5587E26320EC09210088D08C /* StartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				5504DA3520EDA157002D3E77 /* Start.swift */,
 				5587E27620EC0BB70088D08C /* Question.swift */,
 				5504DA3320ED9365002D3E77 /* UserDefaultsExt.swift */,
+				550C033820EFFF980000B435 /* GameData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 				5587E27720EC0BB70088D08C /* Question.swift in Sources */,
 				5587E26420EC09210088D08C /* StartVC.swift in Sources */,
 				5504DA3420ED9365002D3E77 /* UserDefaultsExt.swift in Sources */,
+				550C033920EFFF980000B435 /* GameData.swift in Sources */,
 				5504DA3620EDA157002D3E77 /* Start.swift in Sources */,
 				5587E26220EC09210088D08C /* AppDelegate.swift in Sources */,
 			);
