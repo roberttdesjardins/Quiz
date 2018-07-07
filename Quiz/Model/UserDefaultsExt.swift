@@ -9,12 +9,12 @@
 import Foundation
 
 extension UserDefaults{
-    func setUserHighScores(array: [Int]){
-        set(array, forKey: UserDefaultsKeys.userHighScores.rawValue)
+    func setUserHighScore(score: Int){
+        set(score, forKey: UserDefaultsKeys.userHighScores.rawValue)
     }
     
-    func getUserHighScores() -> [Int]{
-        return object(forKey: UserDefaultsKeys.userHighScores.rawValue) as? [Int] ?? [Int]()
+    func getUserHighScore() -> Int{
+        return object(forKey: UserDefaultsKeys.userHighScores.rawValue) as? Int ?? Int()
     }
 }
 

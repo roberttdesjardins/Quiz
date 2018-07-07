@@ -18,6 +18,7 @@ class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let pickerView = UIPickerView()
         
         pickerView.delegate = self
@@ -46,6 +47,11 @@ class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         toolBar.setItems([flexSpace,textBtn,flexSpace,doneButton], animated: true)
         
         pickerTextField.inputAccessoryView = toolBar
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        highScoreLbl.text = "High Score: \(UserDefaults.standard.getUserHighScore())"
     }
     
     @objc func donePressed(sender: UIBarButtonItem) {

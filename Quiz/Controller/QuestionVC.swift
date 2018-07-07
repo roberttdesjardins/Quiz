@@ -22,7 +22,7 @@ class QuestionVC: UIViewController {
     var answer = ""
     var score = 0
     var numberOfWrongAnswers: Int = 0
-    let maxNumberOfWrongAnswers: Int = 3
+    let maxNumberOfWrongAnswers = GameData.shared.maxNumberOfQuestionsWrong
     
     var questionType: String?
     var listOfQuestions: [QuestionStruct]!
@@ -90,14 +90,12 @@ class QuestionVC: UIViewController {
     
     
     func answeredCorrectly() {
-        // TODO
         score = score + (10 * seconds)
         scoreLbl.text = "Score: \(score)"
         getQuestion()
     }
     
     func answeredIncorrectly() {
-        // TODO
         numberOfWrongAnswers = numberOfWrongAnswers + 1
         if numberOfWrongAnswers >= maxNumberOfWrongAnswers {
             gameOver()
@@ -106,17 +104,22 @@ class QuestionVC: UIViewController {
     }
     
     @IBAction func exitBtnPressed(_ sender: Any) {
-        // TODO: Save score?
-        self.dismiss(animated: true, completion: nil)
+        // TODO: Create are you sure you want to exit notification
+        // TODO: Call gameOver
+        gameOver()
     }
     
     func gameOver() {
-        // TODO
+        // TODO: Show Game Over text
+        if score >= UserDefaults.standard.getUserHighScore() as Int {
+            UserDefaults.standard.setUserHighScore(score: score)
+        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     
     func runTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self,   selector: (#selector(QuestionVC.updateTimer)), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(QuestionVC.updateTimer)), userInfo: nil, repeats: true)
     }
     
     @objc func updateTimer() {

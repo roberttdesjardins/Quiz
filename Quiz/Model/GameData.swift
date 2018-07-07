@@ -11,4 +11,5 @@ import Foundation
 class GameData {
     static let shared = GameData()
     var startTimer = 20
+    var maxNumberOfQuestionsWrong = 3
 }
