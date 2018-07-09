@@ -9,7 +9,8 @@
 import UIKit
 
 class QuestionVC: UIViewController {
-    // TODO: Get working with api
+    // TODO: Show number of "Lives" at bottom of screen
+    // TODO: Show a countdown bar for the timer
     @IBOutlet weak var questionLbl: UILabel!
     @IBOutlet weak var answer1Btn: UIButton!
     @IBOutlet weak var answer2Btn: UIButton!
@@ -25,7 +26,7 @@ class QuestionVC: UIViewController {
     
     var questionType: String?
     var jsonUrl: String = ""
-    var jsonResult: [String:Any]?
+    var jsonResult: [String:Any]? 
     var listOfQuestions: [Question] = [] // A list of questions for this round
     
     var seconds = GameData.shared.startTimer
@@ -57,6 +58,7 @@ class QuestionVC: UIViewController {
     }
     
     func setQuestionType() {
+        // TODO: Dynamically change from category- gets correct amount from category up to 50
         if questionType != nil {
             switch questionType {
             case "All":
@@ -65,6 +67,8 @@ class QuestionVC: UIViewController {
                 jsonUrl = "https://opentdb.com/api.php?amount=50&category=24"
             case "Music":
                 jsonUrl = "https://opentdb.com/api.php?amount=50&category=12"
+            case "Mythology":
+                jsonUrl = "https://opentdb.com/api.php?amount=42&category=20"
             default:
                 jsonUrl = "https://opentdb.com/api.php?amount=50"
             }
@@ -85,20 +89,25 @@ class QuestionVC: UIViewController {
     
     
     func getQuestion() {
-        let randomQuestion = randRange(lower: 0, upper: UInt32(listOfQuestions.count - 1))
-        let question = listOfQuestions[randomQuestion]
-        questionLbl.text = question.question
+        if listOfQuestions.count > 0 {
+            let randomQuestion = randRange(lower: 0, upper: UInt32(listOfQuestions.count - 1))
+            let question = listOfQuestions[randomQuestion]
+            questionLbl.text = question.question
+            
+            var answersToShuffle = question.incorrectAnswer
+            answersToShuffle.append(question.correctAnswer)
+            let shuffledAnswers = shuffleArray(arrayToShuffle: answersToShuffle)
+            
+            answer1Btn.setTitle(shuffledAnswers[0], for: .normal)
+            answer2Btn.setTitle(shuffledAnswers[1], for: .normal)
+            answer3Btn.setTitle(shuffledAnswers[2], for: .normal)
+            answer4Btn.setTitle(shuffledAnswers[3], for: .normal)
+            answer = question.correctAnswer
+            seconds = GameData.shared.startTimer
+        } else {
+            print ("No questions??")
+        }
 
-        var answersToShuffle = question.incorrectAnswer
-        answersToShuffle.append(question.correctAnswer)
-        let shuffledAnswers = shuffleArray(arrayToShuffle: answersToShuffle)
-
-        answer1Btn.setTitle(shuffledAnswers[0], for: .normal)
-        answer2Btn.setTitle(shuffledAnswers[1], for: .normal)
-        answer3Btn.setTitle(shuffledAnswers[2], for: .normal)
-        answer4Btn.setTitle(shuffledAnswers[3], for: .normal)
-        answer = question.correctAnswer
-        seconds = GameData.shared.startTimer
     }
     
     func shuffleArray(arrayToShuffle: [String]) -> [String] {

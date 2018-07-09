@@ -12,14 +12,14 @@ class Start {
     fileprivate var _questionType: String!
     fileprivate var _questionChoices: [String]!
     
-    
-    var questionChoices: [String] {
-        return _questionChoices
-    }
-    
     var questionType: String {
         set { _questionType = newValue }
         get { return _questionType }
+    }
+    
+    var questionChoices: [String] {
+        set { _questionChoices = newValue }
+        get { return _questionChoices }
     }
     
     init(questionType: String, questionChoices: [String]) {

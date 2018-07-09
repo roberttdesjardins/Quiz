@@ -15,11 +15,12 @@ class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet weak var pickerTextField: UITextField!
     @IBOutlet weak var highScoreLbl: UILabel!
     
-    // TODO: Change questionChoices
-    let start = Start(questionType: "All", questionChoices: ["All", "Politics", "Music"])
+    let start = Start(questionType: "All", questionChoices: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        getCategoryOptions()
         
         let pickerView = UIPickerView()
         
@@ -49,6 +50,23 @@ class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         toolBar.setItems([flexSpace,textBtn,flexSpace,doneButton], animated: true)
         
         pickerTextField.inputAccessoryView = toolBar
+    }
+    
+    func getCategoryOptions() {
+        var tempCategory: [String] = []
+        do {
+            let data = NSData(contentsOf: NSURL(string: "https://opentdb.com/api_category.php")! as URL)
+            
+            let jsonResult = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
+            
+            for cateogry in jsonResult!["trivia_categories"] as! [Dictionary<String, Any>] {
+                tempCategory.append(cateogry["name"] as! String)
+            }
+            start.questionChoices = tempCategory
+            
+        } catch let error as NSError {
+            print(error)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
