@@ -9,8 +9,6 @@
 import UIKit
 
 class QuestionVC: UIViewController {
-    // TODO: Create a countdown timer
-    
     @IBOutlet weak var questionLbl: UILabel!
     @IBOutlet weak var answer1Btn: UIButton!
     @IBOutlet weak var answer2Btn: UIButton!
@@ -51,7 +49,8 @@ class QuestionVC: UIViewController {
             case "US Politics":
                 listOfQuestions = usPoliticalQuestionsStored
             case "Music":
-                listOfQuestions = musicQuestionsStored
+                // TODO
+                listOfQuestions = allQuestionsStored
             default:
                 listOfQuestions = allQuestionsStored
             }
@@ -63,12 +62,30 @@ class QuestionVC: UIViewController {
         let randomQuestion = randRange(lower: 0, upper: UInt32(listOfQuestions.count - 1))
         let question = Question(question: listOfQuestions[randomQuestion])
         questionLbl.text = question.question
-        answer1Btn.setTitle(question.answer1, for: .normal)
-        answer2Btn.setTitle(question.answer2, for: .normal)
-        answer3Btn.setTitle(question.answer3, for: .normal)
-        answer4Btn.setTitle(question.answer4, for: .normal)
+        
+        var answersToShuffle = question.incorrectAnswer
+        answersToShuffle.append(question.correctAnswer)
+        let shuffledAnswers = shuffleArray(arrayToShuffle: answersToShuffle)
+        
+        answer1Btn.setTitle(shuffledAnswers[0], for: .normal)
+        answer2Btn.setTitle(shuffledAnswers[1], for: .normal)
+        answer3Btn.setTitle(shuffledAnswers[2], for: .normal)
+        answer4Btn.setTitle(shuffledAnswers[3], for: .normal)
         answer = question.correctAnswer
         seconds = GameData.shared.startTimer
+    }
+    
+    func shuffleArray(arrayToShuffle: [String]) -> [String] {
+        var items = arrayToShuffle
+        var last = items.count - 1
+        
+        while(last > 0)
+        {
+            let rand = Int(arc4random_uniform(UInt32(last)))
+            items.swapAt(last, rand)
+            last -= 1
+        }
+        return items
     }
     
     @IBAction func answer1BtnPressed(_ sender: Any) {

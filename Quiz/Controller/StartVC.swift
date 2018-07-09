@@ -9,11 +9,13 @@
 import UIKit
 
 class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+    // TODO: Add ability to add personal questions?
     
     
     @IBOutlet weak var pickerTextField: UITextField!
     @IBOutlet weak var highScoreLbl: UILabel!
     
+    // TODO: Change questionChoices
     let start = Start(questionType: "All", questionChoices: ["All", "US Politics", "Music"])
     
     override func viewDidLoad() {
