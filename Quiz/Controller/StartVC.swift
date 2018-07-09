@@ -16,7 +16,7 @@ class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet weak var highScoreLbl: UILabel!
     
     // TODO: Change questionChoices
-    let start = Start(questionType: "All", questionChoices: ["All", "US Politics", "Music"])
+    let start = Start(questionType: "All", questionChoices: ["All", "Politics", "Music"])
     
     override func viewDidLoad() {
         super.viewDidLoad()

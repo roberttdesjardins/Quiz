@@ -9,6 +9,7 @@
 import UIKit
 
 class QuestionVC: UIViewController {
+    // TODO: Get working with api
     @IBOutlet weak var questionLbl: UILabel!
     @IBOutlet weak var answer1Btn: UIButton!
     @IBOutlet weak var answer2Btn: UIButton!
@@ -23,7 +24,9 @@ class QuestionVC: UIViewController {
     let maxNumberOfWrongAnswers = GameData.shared.maxNumberOfQuestionsWrong
     
     var questionType: String?
-    var listOfQuestions: [QuestionStruct]!
+    var jsonUrl: String = ""
+    var jsonResult: [String:Any]?
+    var listOfQuestions: [Question] = [] // A list of questions for this round
     
     var seconds = GameData.shared.startTimer
     var timer = Timer()
@@ -37,22 +40,45 @@ class QuestionVC: UIViewController {
         answer3Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         answer4Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         setQuestionType()
+        parseJsonForQuestions()
         getQuestion()
         runTimer()
+    }
+    
+    func parseJSON(){
+        do {
+            let data = NSData(contentsOf: NSURL(string: jsonUrl)! as URL)
+            
+            jsonResult = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
+
+        } catch let error as NSError {
+            print(error)
+        }
     }
     
     func setQuestionType() {
         if questionType != nil {
             switch questionType {
             case "All":
-                listOfQuestions = allQuestionsStored
-            case "US Politics":
-                listOfQuestions = usPoliticalQuestionsStored
+                jsonUrl = "https://opentdb.com/api.php?amount=50"
+            case "Politics":
+                jsonUrl = "https://opentdb.com/api.php?amount=50&category=24"
             case "Music":
-                // TODO
-                listOfQuestions = allQuestionsStored
+                jsonUrl = "https://opentdb.com/api.php?amount=50&category=12"
             default:
-                listOfQuestions = allQuestionsStored
+                jsonUrl = "https://opentdb.com/api.php?amount=50"
+            }
+        }
+        parseJSON()
+    }
+    
+    func parseJsonForQuestions() {
+        // Goes through the given json file and adds all questions to listOfQuestions
+        // TODO: Only adds multiple choice atm
+        for question in jsonResult!["results"] as! [Dictionary<String, Any>] {
+            if question["type"] as! String == "multiple" {
+                let newQuestion = Question.init(json: question)
+                listOfQuestions.append(newQuestion!)
             }
         }
     }
@@ -60,13 +86,13 @@ class QuestionVC: UIViewController {
     
     func getQuestion() {
         let randomQuestion = randRange(lower: 0, upper: UInt32(listOfQuestions.count - 1))
-        let question = Question(question: listOfQuestions[randomQuestion])
+        let question = listOfQuestions[randomQuestion]
         questionLbl.text = question.question
-        
+
         var answersToShuffle = question.incorrectAnswer
         answersToShuffle.append(question.correctAnswer)
         let shuffledAnswers = shuffleArray(arrayToShuffle: answersToShuffle)
-        
+
         answer1Btn.setTitle(shuffledAnswers[0], for: .normal)
         answer2Btn.setTitle(shuffledAnswers[1], for: .normal)
         answer3Btn.setTitle(shuffledAnswers[2], for: .normal)
