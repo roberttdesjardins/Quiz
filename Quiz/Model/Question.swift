@@ -73,11 +73,16 @@ var usPoliticalQuestionsStored: [QuestionStruct] {
     let question1 = QuestionStruct(question: "Name the first President of the United States", answer1: "Abraham Lincoln", answer2: "George Washington", answer3: "George H. W. Bush", answer4: "Channing Tatum", correctAnswer: "George Washington")
     let question2 = QuestionStruct(question: "In which year was the US Constitution drafted?", answer1: "1776", answer2: "1787", answer3: "1899", answer4: "2001", correctAnswer: "1787")
     let question3 = QuestionStruct(question: "Who is the longest serving president of the United States?", answer1: "George Washington", answer2: "Donald Trump", answer3: "Thomas Jefferson", answer4: "Franklin D. Roosevelt", correctAnswer: "Franklin D. Roosevelt")
-    return [question0, question1, question2, question3]
+    let question4 = QuestionStruct(question: "In what year was the US Constitution last amended?", answer1: "1789", answer2: "1945", answer3: "1992", answer4: "2001", correctAnswer: "1992")
+    let question5 = QuestionStruct(question: "How many voting memebers are there in the United States Congress?", answer1: "100", answer2: "535", answer3: "538", answer4: "675", correctAnswer: "535")
+    let question6 = QuestionStruct(question: "How many US presidents have been assassinated?", answer1: "1", answer2: "2", answer3: "3", answer4: "4", correctAnswer: "4")
+    return [question0, question1, question2, question3, question4, question5, question6]
 }
 
 var musicQuestionsStored: [QuestionStruct] {
     let question0 = QuestionStruct(question: "Which 80s Clash song, when re-released in 1991, went straight to number one in the UK?", answer1: "London Calling", answer2: "Straight to Hell", answer3: "Rock the Casbah", answer4: "Should I Stay or Should I Go?", correctAnswer: "Should I Stay or Should I Go?")
     let question1 = QuestionStruct(question: "Which of the following beatles albums was released first?", answer1: "Please Please Me", answer2: "Let It Be", answer3: "Sgt. Pepper's Lonely Hearts Club Band", answer4: "Introducing... The Beatles", correctAnswer: "Please Please Me")
-    return [question0, question1]
+    let question2 = QuestionStruct(question: "Fill in the song lyrics: 'London calling to the ____ of death; Quit holdin' out and draw another breath'", answer1: "Zombies", answer2: "Choir", answer3: "City", answer4: "Underworld", correctAnswer: "Zombies")
+    let question3 = QuestionStruct(question: "Fill in the song lyrics: 'Two plus two is four; Minus one that's three, ____ maths'", answer1: "easy", answer2: "fast", answer3: "basic", answer4: "quick", correctAnswer: "quick")
+    return [question0, question1, question2, question3]
 }

@@ -104,17 +104,29 @@ class QuestionVC: UIViewController {
     }
     
     @IBAction func exitBtnPressed(_ sender: Any) {
-        // TODO: Create are you sure you want to exit notification
-        // TODO: Call gameOver
-        gameOver()
+        let alert = UIAlertController(title: "Are you sure you want to quit?", message: "Score will be recorded", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
+            NSLog("The \"No\" alert occured.")
+        }))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            NSLog("The \"Yes\" alert occured.")
+            self.gameOver()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func gameOver() {
-        // TODO: Show Game Over text
         if score >= UserDefaults.standard.getUserHighScore() as Int {
             UserDefaults.standard.setUserHighScore(score: score)
         }
-        self.dismiss(animated: true, completion: nil)
+        
+        let alert = UIAlertController(title: "Game Over", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            NSLog("The \"Ok\" alert occured.")
+            self.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     
