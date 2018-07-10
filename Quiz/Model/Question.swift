@@ -71,11 +71,12 @@ class Question {
         let decodedCorrectAnswer = Data(base64Encoded: correctAnswer)!
         var decodedIncorrectAnswers: [String] = []
         
-        for i in 0...incorrectAnswers.count-1 {
-            let decodedIncorrectAnswer = Data(base64Encoded: incorrectAnswers[i])!
-            decodedIncorrectAnswers.append(String(data: decodedIncorrectAnswer, encoding: .utf8)!)
+        if incorrectAnswers.count > 0 {
+            for i in 0...incorrectAnswers.count-1 {
+                let decodedIncorrectAnswer = Data(base64Encoded: incorrectAnswers[i])!
+                decodedIncorrectAnswers.append(String(data: decodedIncorrectAnswer, encoding: .utf8)!)
+            }
         }
-        
         
         self._category = String(data: decodedCategory, encoding: .utf8)!
         self._type = String(data: decodedType, encoding: .utf8)!
@@ -95,16 +96,16 @@ struct QuestionStruct {
     let incorrectAnswers: [String]
 }
 
-enum Category : String {
-    case USPolitics = "US Politics"
-    case Music = "Music"
-}
-
-enum Difficulty : String {
-    case Easy = "easy"
-    case Medium = "medium"
-    case Hard = "hard"
-}
+//enum Category : String {
+//    case USPolitics = "US Politics"
+//    case Music = "Music"
+//}
+//
+//enum Difficulty : String {
+//    case Easy = "easy"
+//    case Medium = "medium"
+//    case Hard = "hard"
+//}
 
 //var allQuestionsStored: [QuestionStruct] {
 //    let allQuestions = usPoliticalQuestionsStored

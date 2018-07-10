@@ -16,6 +16,7 @@ class QuestionVC: UIViewController {
     @IBOutlet weak var answer2Btn: UIButton!
     @IBOutlet weak var answer3Btn: UIButton!
     @IBOutlet weak var answer4Btn: UIButton!
+    @IBOutlet weak var difficultyLbl: UILabel!
     @IBOutlet weak var timeRemainingLbl: UILabel!
     @IBOutlet weak var scoreLbl: UILabel!
     
@@ -25,6 +26,8 @@ class QuestionVC: UIViewController {
     let maxNumberOfWrongAnswers = GameData.shared.maxNumberOfQuestionsWrong
     
     var questionType: String?
+    var categoryID: Int = 9
+    var questionCount: Int = 50
     var jsonUrl: String = ""
     var jsonResult: [String:Any]? 
     var listOfQuestions: [Question] = [] // A list of questions for this round
@@ -40,43 +43,57 @@ class QuestionVC: UIViewController {
         answer2Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         answer3Btn.titleLabel?.adjustsFontSizeToFitWidth = true
         answer4Btn.titleLabel?.adjustsFontSizeToFitWidth = true
-        setQuestionType()
-        parseJsonForQuestions()
+        findCateogryID()
+        findNumberOfQuestionInCategory()
+        createJsonUrl()
         getQuestion()
         runTimer()
     }
     
-    func parseJSON(){
+    func findCateogryID() {
         do {
-            let data = NSData(contentsOf: NSURL(string: jsonUrl)! as URL)
-
-            jsonResult = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
-
-
+            let data = NSData(contentsOf: NSURL(string: "https://opentdb.com/api_category.php")! as URL)
+            let contents = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
+            
+            for category in contents!["trivia_categories"] as! [Dictionary<String, Any>] {
+                if category["name"] as? String == questionType {
+                    categoryID = category["id"] as! Int
+                }
+            }
+            print("CategoryID is \(categoryID)")
         } catch let error as NSError {
             print(error)
         }
     }
     
-    
-    func setQuestionType() {
-        // TODO: Dynamically change from category- gets correct amount from category up to 50
-        // TODO: Pass category id from StartVC
-        if questionType != nil {
-            switch questionType {
-            case "General Knowledge":
-                jsonUrl = "https://opentdb.com/api.php?amount=50&encode=base64"
-            case "Politics":
-                jsonUrl = "https://opentdb.com/api.php?amount=40&category=24&encode=base64"
-            case "Music":
-                jsonUrl = "https://opentdb.com/api.php?amount=50&category=12&encode=base64"
-            case "Mythology":
-                jsonUrl = "https://opentdb.com/api.php?amount=42&category=20&encode=base64"
-            default:
-                jsonUrl = "https://opentdb.com/api.php?amount=50&encode=base64"
-            }
+    func findNumberOfQuestionInCategory() {
+        do {
+            let data = NSData(contentsOf: NSURL(string: "https://opentdb.com/api_count.php?category=" + String(categoryID))! as URL)
+            let contents = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
+            let subcontents = contents!["category_question_count"] as! [String:Any]?
+            questionCount = min(subcontents!["total_question_count"] as! Int, 50)
+            print("QuestionCount is \(questionCount)")
+        } catch let error as NSError {
+            print(error)
         }
+    }
+    
+    func createJsonUrl() {
+        jsonUrl = "https://opentdb.com/api.php?amount=" + String(questionCount) + "&category=" + String(categoryID) + "&encode=base64"
         parseJSON()
+    }
+    
+    func parseJSON(){
+        do {
+            let data = NSData(contentsOf: NSURL(string: jsonUrl)! as URL)
+            
+            jsonResult = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
+            
+            
+        } catch let error as NSError {
+            print(error)
+        }
+        parseJsonForQuestions()
     }
     
     func parseJsonForQuestions() {
@@ -98,6 +115,7 @@ class QuestionVC: UIViewController {
         if listOfQuestions.count > 0 {
             let randomQuestion = randRange(lower: 0, upper: UInt32(listOfQuestions.count - 1))
             let question = listOfQuestions[randomQuestion]
+            difficultyLbl.text = "Difficulty: \(question.difficulty)"
             questionLbl.text = question.question
             
             var answersToShuffle = question.incorrectAnswer
@@ -111,7 +129,7 @@ class QuestionVC: UIViewController {
             answer = question.correctAnswer
             seconds = GameData.shared.startTimer
         } else {
-            print ("No questions??")
+            print ("No questions")
         }
 
     }

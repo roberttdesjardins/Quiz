@@ -13,7 +13,7 @@ class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet weak var pickerTextField: UITextField!
     @IBOutlet weak var highScoreLbl: UILabel!
     
-    let start = Start(questionType: "General Knowledge", questionChoices: [])
+    let start = Start(questionType: "All", questionChoices: [])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,7 @@ class StartVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func getCategoryOptions() {
-        var tempCategory: [String] = []
+        var tempCategory: [String] = ["All"]
         do {
             let data = NSData(contentsOf: NSURL(string: "https://opentdb.com/api_category.php")! as URL)
             

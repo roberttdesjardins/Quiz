@@ -219,11 +219,19 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Difficulty: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qgn-gH-B4K" userLabel="Difficulty Lbl">
+                                <rect key="frame" x="149" y="536.5" width="77.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.88235294119999996" green="0.94117647059999998" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qA4-OU-cPQ" firstAttribute="trailing" secondItem="8AB-bK-qal" secondAttribute="trailing" constant="20" id="3Kk-tC-d0Z"/>
                             <constraint firstItem="ZnB-de-xND" firstAttribute="top" secondItem="8AB-bK-qal" secondAttribute="bottom" constant="50" id="8Rf-lc-DdK"/>
+                            <constraint firstItem="Qgn-gH-B4K" firstAttribute="centerX" secondItem="Lcs-lo-c72" secondAttribute="centerX" id="AZt-4w-xD2"/>
+                            <constraint firstItem="CsN-w3-Aer" firstAttribute="top" secondItem="Qgn-gH-B4K" secondAttribute="bottom" constant="20" id="BHs-Ql-eSG"/>
                             <constraint firstItem="ATu-aI-1zp" firstAttribute="trailing" secondItem="qA4-OU-cPQ" secondAttribute="trailing" id="DWH-eT-ofk"/>
                             <constraint firstItem="8AB-bK-qal" firstAttribute="top" secondItem="ATu-aI-1zp" secondAttribute="bottom" constant="100" id="KOs-5j-V9c"/>
                             <constraint firstItem="qA4-OU-cPQ" firstAttribute="trailing" secondItem="ZnB-de-xND" secondAttribute="trailing" constant="30" id="KZj-rE-hIJ"/>
@@ -243,6 +251,7 @@
                         <outlet property="answer2Btn" destination="z2J-qp-6MR" id="fih-id-SKn"/>
                         <outlet property="answer3Btn" destination="LWf-wY-vXH" id="FKV-b7-QIW"/>
                         <outlet property="answer4Btn" destination="WP7-TV-p3r" id="799-K5-kJB"/>
+                        <outlet property="difficultyLbl" destination="Qgn-gH-B4K" id="LLG-Nh-PdC"/>
                         <outlet property="questionLbl" destination="8AB-bK-qal" id="dxu-t0-fbS"/>
                         <outlet property="scoreLbl" destination="CPO-9q-sPH" id="YdE-g6-yfq"/>
                         <outlet property="timeRemainingLbl" destination="CsN-w3-Aer" id="JWq-KK-B01"/>
