@@ -63,12 +63,26 @@ class Question {
         else {
                 return nil
         }
-        self._category = category
-        self._type = type
-        self._difficulty = difficulty
-        self._question = question
-        self._correctAnswer = correctAnswer
-        self._incorrectAnswers = incorrectAnswers
+        
+        let decodedCategory = Data(base64Encoded: category)!
+        let decodedType = Data(base64Encoded: type)!
+        let decodedDifficulty = Data(base64Encoded: difficulty)!
+        let decodedQuestion = Data(base64Encoded: question)!
+        let decodedCorrectAnswer = Data(base64Encoded: correctAnswer)!
+        var decodedIncorrectAnswers: [String] = []
+        
+        for i in 0...incorrectAnswers.count-1 {
+            let decodedIncorrectAnswer = Data(base64Encoded: incorrectAnswers[i])!
+            decodedIncorrectAnswers.append(String(data: decodedIncorrectAnswer, encoding: .utf8)!)
+        }
+        
+        
+        self._category = String(data: decodedCategory, encoding: .utf8)!
+        self._type = String(data: decodedType, encoding: .utf8)!
+        self._difficulty = String(data: decodedDifficulty, encoding: .utf8)!
+        self._question = String(data: decodedQuestion, encoding: .utf8)!
+        self._correctAnswer = String(data: decodedCorrectAnswer, encoding: .utf8)!
+        self._incorrectAnswers = decodedIncorrectAnswers
     }
 }
 

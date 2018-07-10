@@ -49,28 +49,31 @@ class QuestionVC: UIViewController {
     func parseJSON(){
         do {
             let data = NSData(contentsOf: NSURL(string: jsonUrl)! as URL)
-            
+
             jsonResult = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
+
 
         } catch let error as NSError {
             print(error)
         }
     }
     
+    
     func setQuestionType() {
         // TODO: Dynamically change from category- gets correct amount from category up to 50
+        // TODO: Pass category id from StartVC
         if questionType != nil {
             switch questionType {
-            case "All":
-                jsonUrl = "https://opentdb.com/api.php?amount=50"
+            case "General Knowledge":
+                jsonUrl = "https://opentdb.com/api.php?amount=50&encode=base64"
             case "Politics":
-                jsonUrl = "https://opentdb.com/api.php?amount=50&category=24"
+                jsonUrl = "https://opentdb.com/api.php?amount=40&category=24&encode=base64"
             case "Music":
-                jsonUrl = "https://opentdb.com/api.php?amount=50&category=12"
+                jsonUrl = "https://opentdb.com/api.php?amount=50&category=12&encode=base64"
             case "Mythology":
-                jsonUrl = "https://opentdb.com/api.php?amount=42&category=20"
+                jsonUrl = "https://opentdb.com/api.php?amount=42&category=20&encode=base64"
             default:
-                jsonUrl = "https://opentdb.com/api.php?amount=50"
+                jsonUrl = "https://opentdb.com/api.php?amount=50&encode=base64"
             }
         }
         parseJSON()
@@ -80,7 +83,10 @@ class QuestionVC: UIViewController {
         // Goes through the given json file and adds all questions to listOfQuestions
         // TODO: Only adds multiple choice atm
         for question in jsonResult!["results"] as! [Dictionary<String, Any>] {
-            if question["type"] as! String == "multiple" {
+            let base64Encoded = question["type"] as! String
+            let decodedType = Data(base64Encoded: base64Encoded)!
+            let decodedTypeString = String(data: decodedType, encoding: .utf8)!
+            if decodedTypeString == "multiple" {
                 let newQuestion = Question.init(json: question)
                 listOfQuestions.append(newQuestion!)
             }
