@@ -67,6 +67,7 @@ class QuestionVC: UIViewController {
     }
     
     func findNumberOfQuestionInCategory() {
+        // TODO: Change based on difficulty
         do {
             let data = NSData(contentsOf: NSURL(string: "https://opentdb.com/api_count.php?category=" + String(categoryID))! as URL)
             let contents = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
@@ -79,7 +80,13 @@ class QuestionVC: UIViewController {
     }
     
     func createJsonUrl() {
-        jsonUrl = "https://opentdb.com/api.php?amount=" + String(questionCount) + "&category=" + String(categoryID) + "&encode=base64"
+        if questionType == "All" {
+            print("All categories")
+            jsonUrl = "https://opentdb.com/api.php?amount=50&encode=base64"
+        } else {
+            jsonUrl = "https://opentdb.com/api.php?amount=" + String(questionCount) + "&category=" + String(categoryID) + "&encode=base64"
+        }
+
         parseJSON()
     }
     
@@ -113,6 +120,7 @@ class QuestionVC: UIViewController {
     
     func getQuestion() {
         if listOfQuestions.count > 0 {
+            isTimerRunning = true
             let randomQuestion = randRange(lower: 0, upper: UInt32(listOfQuestions.count - 1))
             let question = listOfQuestions[randomQuestion]
             difficultyLbl.text = "Difficulty: \(question.difficulty)"
@@ -131,7 +139,6 @@ class QuestionVC: UIViewController {
         } else {
             print ("No questions")
         }
-
     }
     
     func shuffleArray(arrayToShuffle: [String]) -> [String] {
@@ -166,18 +173,30 @@ class QuestionVC: UIViewController {
     
     
     func answeredCorrectly() {
+        // TODO: Play positive sound
         score = score + (10 * seconds)
         scoreLbl.text = "Score: \(score)"
         getQuestion()
     }
     
     func answeredIncorrectly() {
+        // TODO: Play incorrect beep
+        isTimerRunning = false
         numberOfWrongAnswers = numberOfWrongAnswers + 1
-        if numberOfWrongAnswers >= maxNumberOfWrongAnswers {
-            gameOver()
-        }
-        getQuestion()
+        let alert = UIAlertController(title: "Incorrect", message: "The correct answer is: \(answer)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
+            NSLog("The \"Ok\" alert occured.")
+            if self.numberOfWrongAnswers >= self.maxNumberOfWrongAnswers {
+                self.gameOver()
+            } else {
+                self.getQuestion()
+            }
+            
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
+    
+    
     
     @IBAction func exitBtnPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Are you sure you want to quit?", message: "Score will be recorded", preferredStyle: .alert)
@@ -211,10 +230,12 @@ class QuestionVC: UIViewController {
     }
     
     @objc func updateTimer() {
-        seconds -= 1
-        timeRemainingLbl.text = "Time Remaining: \(seconds)"
-        if seconds <= 0 {
-            answeredIncorrectly()
+        if isTimerRunning {
+            seconds -= 1
+            timeRemainingLbl.text = "Time Remaining: \(seconds)"
+            if seconds <= 0 {
+                answeredIncorrectly()
+            }
         }
     }
     
