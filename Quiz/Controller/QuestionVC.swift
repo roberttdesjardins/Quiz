@@ -21,6 +21,7 @@ class QuestionVC: UIViewController {
     @IBOutlet weak var scoreLbl: UILabel!
     
     var answer = ""
+    var difficultyScoreValue = 1
     var score = 0
     var numberOfWrongAnswers: Int = 0
     let maxNumberOfWrongAnswers = GameData.shared.maxNumberOfQuestionsWrong
@@ -28,8 +29,6 @@ class QuestionVC: UIViewController {
     var questionType: String?
     var categoryID: Int = 9
     var questionCount: Int = 50
-    var jsonUrl: String = ""
-    var jsonResult: [String:Any]? 
     var listOfQuestions: [Question] = [] // A list of questions for this round
     
     var seconds = GameData.shared.startTimer
@@ -49,6 +48,7 @@ class QuestionVC: UIViewController {
         getQuestion()
         runTimer()
     }
+    
     
     func findCateogryID() {
         do {
@@ -80,60 +80,80 @@ class QuestionVC: UIViewController {
     }
     
     func createJsonUrl() {
+        // creates a jsonUrl for the options user has chosen
+        var jsonUrl = ""
         if questionType == "All" {
             print("All categories")
             jsonUrl = "https://opentdb.com/api.php?amount=50&encode=base64"
         } else {
             jsonUrl = "https://opentdb.com/api.php?amount=" + String(questionCount) + "&category=" + String(categoryID) + "&encode=base64"
         }
-
-        parseJSON()
+        parseJSON(jsonUrl: jsonUrl)
     }
     
-    func parseJSON(){
+    func parseJSON(jsonUrl: String){
+        // Takes the jsonUrl and stores the json files in jsonResult
+        var jsonResult: [String:Any]?
         do {
             let data = NSData(contentsOf: NSURL(string: jsonUrl)! as URL)
             
             jsonResult = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
-            
-            
+            parseJsonForQuestions(jsonResult: jsonResult!)
         } catch let error as NSError {
             print(error)
         }
-        parseJsonForQuestions()
+        
     }
     
-    func parseJsonForQuestions() {
+    func parseJsonForQuestions(jsonResult : [String:Any]) {
         // Goes through the given json file and adds all questions to listOfQuestions
-        // TODO: Only adds multiple choice atm
-        for question in jsonResult!["results"] as! [Dictionary<String, Any>] {
-            let base64Encoded = question["type"] as! String
-            let decodedType = Data(base64Encoded: base64Encoded)!
-            let decodedTypeString = String(data: decodedType, encoding: .utf8)!
-            if decodedTypeString == "multiple" {
-                let newQuestion = Question.init(json: question)
-                listOfQuestions.append(newQuestion!)
-            }
+        for question in jsonResult["results"] as! [Dictionary<String, Any>] {
+            let newQuestion = Question.init(json: question)
+            listOfQuestions.append(newQuestion!)
         }
     }
     
     
     func getQuestion() {
+        // Retrevies a random question from the stored listOfQuestions
         if listOfQuestions.count > 0 {
             isTimerRunning = true
             let randomQuestion = randRange(lower: 0, upper: UInt32(listOfQuestions.count - 1))
             let question = listOfQuestions[randomQuestion]
             difficultyLbl.text = "Difficulty: \(question.difficulty)"
+            if difficultyLbl.text == "Easy" {
+                difficultyScoreValue = 1
+            } else if difficultyLbl.text == "Medium" {
+                difficultyScoreValue = 2
+            } else if difficultyLbl.text == "Hard" {
+                difficultyScoreValue = 3
+            } else {
+                difficultyScoreValue = 1
+            }
             questionLbl.text = question.question
             
-            var answersToShuffle = question.incorrectAnswer
-            answersToShuffle.append(question.correctAnswer)
-            let shuffledAnswers = shuffleArray(arrayToShuffle: answersToShuffle)
-            
-            answer1Btn.setTitle(shuffledAnswers[0], for: .normal)
-            answer2Btn.setTitle(shuffledAnswers[1], for: .normal)
-            answer3Btn.setTitle(shuffledAnswers[2], for: .normal)
-            answer4Btn.setTitle(shuffledAnswers[3], for: .normal)
+            if question.type == "multiple" {
+                var answersToShuffle = question.incorrectAnswer
+                answersToShuffle.append(question.correctAnswer)
+                let shuffledAnswers = shuffleArray(arrayToShuffle: answersToShuffle)
+                
+                answer3Btn.isEnabled = true
+                answer4Btn.isEnabled = true
+                answer3Btn.alpha = 1
+                answer4Btn.alpha = 1            // Using alpha to hide and show buttons because isHidden was not working correctly
+                
+                answer1Btn.setTitle(shuffledAnswers[0], for: .normal)
+                answer2Btn.setTitle(shuffledAnswers[1], for: .normal)
+                answer3Btn.setTitle(shuffledAnswers[2], for: .normal)
+                answer4Btn.setTitle(shuffledAnswers[3], for: .normal)
+            } else if question.type == "boolean" {
+                answer1Btn.setTitle("True", for: .normal)
+                answer2Btn.setTitle("False", for: .normal)
+                answer3Btn.isEnabled = false
+                answer4Btn.isEnabled = false
+                answer3Btn.alpha = 0
+                answer4Btn.alpha = 0
+            }
             answer = question.correctAnswer
             seconds = GameData.shared.startTimer
         } else {
@@ -174,7 +194,8 @@ class QuestionVC: UIViewController {
     
     func answeredCorrectly() {
         // TODO: Play positive sound
-        score = score + (10 * seconds)
+        
+        score = score + (10 * seconds) * difficultyScoreValue
         scoreLbl.text = "Score: \(score)"
         getQuestion()
     }
