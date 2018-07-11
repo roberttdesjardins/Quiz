@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import AVFoundation
 
 class QuestionVC: UIViewController {
     // TODO: Show number of "Lives" at bottom of screen
     // TODO: Show a countdown bar for the timer
+    
+    private var soundPlayer: AVAudioPlayer!
+    
     @IBOutlet weak var questionLbl: UILabel!
     @IBOutlet weak var answer1Btn: UIButton!
     @IBOutlet weak var answer2Btn: UIButton!
@@ -67,7 +71,7 @@ class QuestionVC: UIViewController {
     }
     
     func findNumberOfQuestionInCategory() {
-        // TODO: Change based on difficulty
+        // TODO: Change based on difficulty?
         do {
             let data = NSData(contentsOf: NSURL(string: "https://opentdb.com/api_count.php?category=" + String(categoryID))! as URL)
             let contents = try JSONSerialization.jsonObject(with: data! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:Any]
@@ -83,7 +87,6 @@ class QuestionVC: UIViewController {
         // creates a jsonUrl for the options user has chosen
         var jsonUrl = ""
         if questionType == "All" {
-            print("All categories")
             jsonUrl = "https://opentdb.com/api.php?amount=50&encode=base64"
         } else {
             jsonUrl = "https://opentdb.com/api.php?amount=" + String(questionCount) + "&category=" + String(categoryID) + "&encode=base64"
@@ -118,8 +121,10 @@ class QuestionVC: UIViewController {
         // Retrevies a random question from the stored listOfQuestions
         if listOfQuestions.count > 0 {
             isTimerRunning = true
+            timeRemainingLbl.text = "Time Remaining: \(seconds)"
             let randomQuestion = randRange(lower: 0, upper: UInt32(listOfQuestions.count - 1))
             let question = listOfQuestions[randomQuestion]
+            listOfQuestions.remove(at: randomQuestion)
             difficultyLbl.text = "Difficulty: \(question.difficulty)"
             if difficultyLbl.text == "Easy" {
                 difficultyScoreValue = 1
@@ -157,7 +162,8 @@ class QuestionVC: UIViewController {
             answer = question.correctAnswer
             seconds = GameData.shared.startTimer
         } else {
-            print ("No questions")
+            // TODO: Either retrive new questions or go to end game
+            print("Out of questions")
         }
     }
     
@@ -194,14 +200,14 @@ class QuestionVC: UIViewController {
     
     func answeredCorrectly() {
         // TODO: Play positive sound
-        
+        playSound(sound: "Free-GUI-Buttons-028", fileType: "wav")
         score = score + (10 * seconds) * difficultyScoreValue
         scoreLbl.text = "Score: \(score)"
         getQuestion()
     }
     
     func answeredIncorrectly() {
-        // TODO: Play incorrect beep
+        playSound(sound: "Free-GUI-Buttons-038", fileType: "wav")
         isTimerRunning = false
         numberOfWrongAnswers = numberOfWrongAnswers + 1
         let alert = UIAlertController(title: "Incorrect", message: "The correct answer is: \(answer)", preferredStyle: .alert)
@@ -217,16 +223,30 @@ class QuestionVC: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func playSound(sound: String, fileType: String) {
+        let path = Bundle.main.path(forResource: sound, ofType: fileType)!
+        let url = URL(fileURLWithPath: path)
+        do {
+            soundPlayer = try AVAudioPlayer(contentsOf: url)
+            soundPlayer.numberOfLoops = 0
+            soundPlayer.prepareToPlay()
+        } catch let error as NSError {
+            print(error.description)
+        }
+        soundPlayer.play()
+    }
+    
     
     
     @IBAction func exitBtnPressed(_ sender: Any) {
         let alert = UIAlertController(title: "Are you sure you want to quit?", message: "Score will be recorded", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
-            NSLog("The \"No\" alert occured.")
-        }))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
             NSLog("The \"Yes\" alert occured.")
+            self.isTimerRunning = false
             self.gameOver()
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: { _ in
+            NSLog("The \"No\" alert occured.")
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -239,6 +259,7 @@ class QuestionVC: UIViewController {
         let alert = UIAlertController(title: "Game Over", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { _ in
             NSLog("The \"Ok\" alert occured.")
+            self.isTimerRunning = false
             self.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)

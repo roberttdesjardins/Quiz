@@ -17,6 +17,8 @@
 		5587E26C20EC09220088D08C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5587E26A20EC09220088D08C /* LaunchScreen.storyboard */; };
 		5587E27720EC0BB70088D08C /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587E27620EC0BB70088D08C /* Question.swift */; };
 		5587E27920EC11270088D08C /* QuestionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5587E27820EC11270088D08C /* QuestionVC.swift */; };
+		55D4583720F5865700BDD384 /* Free-GUI-Buttons-038.wav in Resources */ = {isa = PBXBuildFile; fileRef = 55D4583620F5865700BDD384 /* Free-GUI-Buttons-038.wav */; };
+		55D4583B20F5895E00BDD384 /* Free-GUI-Buttons-028.wav in Resources */ = {isa = PBXBuildFile; fileRef = 55D4583A20F5895E00BDD384 /* Free-GUI-Buttons-028.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		5587E26D20EC09220088D08C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5587E27620EC0BB70088D08C /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		5587E27820EC11270088D08C /* QuestionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionVC.swift; sourceTree = "<group>"; };
+		55D4583620F5865700BDD384 /* Free-GUI-Buttons-038.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Free-GUI-Buttons-038.wav"; sourceTree = "<group>"; };
+		55D4583A20F5895E00BDD384 /* Free-GUI-Buttons-028.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Free-GUI-Buttons-028.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,7 @@
 		5587E26020EC09210088D08C /* Quiz */ = {
 			isa = PBXGroup;
 			children = (
+				55D4583520F5864800BDD384 /* Audio */,
 				5587E27520EC0B400088D08C /* Controller */,
 				5587E27420EC0B3C0088D08C /* View */,
 				5587E27320EC0B360088D08C /* Model */,
@@ -101,6 +106,15 @@
 				5587E27820EC11270088D08C /* QuestionVC.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		55D4583520F5864800BDD384 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				55D4583A20F5895E00BDD384 /* Free-GUI-Buttons-028.wav */,
+				55D4583620F5865700BDD384 /* Free-GUI-Buttons-038.wav */,
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,9 +175,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D4583720F5865700BDD384 /* Free-GUI-Buttons-038.wav in Resources */,
 				5587E26C20EC09220088D08C /* LaunchScreen.storyboard in Resources */,
 				5587E26920EC09220088D08C /* Assets.xcassets in Resources */,
 				5587E26720EC09210088D08C /* Main.storyboard in Resources */,
+				55D4583B20F5895E00BDD384 /* Free-GUI-Buttons-028.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
